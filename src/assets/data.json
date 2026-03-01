@@ -1,0 +1,14 @@
+{
+  "source": {
+    "uid": 7928198622,
+    "screenName": "RD观测",
+    "profileUrl": "https://m.weibo.cn/u/7928198622",
+    "containerApi": "https://m.weibo.cn/api/container/getIndex?containerid=1076037928198622"
+  },
+  "generatedAt": "2026-03-01",
+  "units": {
+    "sales": "万"
+  },
+  "flagshipFile": "./flagship.json",
+  "midrangeFile": "./midrange.json"
+}

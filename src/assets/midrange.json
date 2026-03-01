@@ -1,0 +1,182 @@
+{
+  "source": {
+    "uid": 7928198622,
+    "screenName": "RD观测",
+    "profileUrl": "https://m.weibo.cn/u/7928198622",
+    "containerApi": "https://m.weibo.cn/api/container/getIndex?containerid=1076037928198622"
+  },
+  "generatedAt": "2026-03-01",
+  "units": {
+    "sales": "万"
+  },
+  "midrange": [
+    {
+      "brand": "荣耀",
+      "series": "500系列",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 159.12,
+          "tag": "中端销量",
+          "statusId": "5271071565546529",
+          "bid": "QtOTyngU9",
+          "statusUrl": "https://m.weibo.cn/status/QtOTyngU9",
+          "createdAtRaw": "Fri Feb 27 23:07:36 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 134.42,
+          "tag": "中端销量",
+          "statusId": "5270541171952211",
+          "bid": "QtB658bRh",
+          "statusUrl": "https://m.weibo.cn/status/QtB658bRh",
+          "createdAtRaw": "Thu Feb 26 12:00:00 +0800 2026"
+        }
+      ]
+    },
+    {
+      "brand": "荣耀",
+      "series": "Win",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 10.13,
+          "tag": "中端销量",
+          "statusId": "5271021435231279",
+          "bid": "QtNAHlWTt",
+          "statusUrl": "https://m.weibo.cn/status/QtNAHlWTt",
+          "createdAtRaw": "Fri Feb 27 19:48:24 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 9.26,
+          "tag": "中端销量",
+          "statusId": "5270270812097092",
+          "bid": "Qtu418Ny4",
+          "statusUrl": "https://m.weibo.cn/status/Qtu418Ny4",
+          "createdAtRaw": "Wed Feb 25 18:05:41 +0800 2026"
+        }
+      ]
+    },
+    {
+      "brand": "荣耀",
+      "series": "Win RT",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 26.91,
+          "tag": "中端销量",
+          "statusId": "5271021435231279",
+          "bid": "QtNAHlWTt",
+          "statusUrl": "https://m.weibo.cn/status/QtNAHlWTt",
+          "createdAtRaw": "Fri Feb 27 19:48:24 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 22.95,
+          "tag": "中端销量",
+          "statusId": "5270270812097092",
+          "bid": "Qtu418Ny4",
+          "statusUrl": "https://m.weibo.cn/status/Qtu418Ny4",
+          "createdAtRaw": "Wed Feb 25 18:05:41 +0800 2026"
+        }
+      ]
+    },
+    {
+      "brand": "荣耀",
+      "series": "Power 2",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 41.9,
+          "tag": "中端销量",
+          "statusId": "5271021435231279",
+          "bid": "QtNAHlWTt",
+          "statusUrl": "https://m.weibo.cn/status/QtNAHlWTt",
+          "createdAtRaw": "Fri Feb 27 19:48:24 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 30.5,
+          "tag": "中端销量",
+          "statusId": "5270270812097092",
+          "bid": "Qtu418Ny4",
+          "statusUrl": "https://m.weibo.cn/status/Qtu418Ny4",
+          "createdAtRaw": "Wed Feb 25 18:05:41 +0800 2026"
+        }
+      ]
+    },
+    {
+      "brand": "OPPO",
+      "series": "Reno 15系列",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 209.12,
+          "tag": "中端销量",
+          "statusId": "5271039455795767",
+          "bid": "QtO3LojK7",
+          "statusUrl": "https://m.weibo.cn/status/QtO3LojK7",
+          "createdAtRaw": "Fri Feb 27 21:00:00 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 172.51,
+          "tag": "中端销量",
+          "statusId": "5270510973230013",
+          "bid": "QtAjndygZ",
+          "statusUrl": "https://m.weibo.cn/status/QtAjndygZ",
+          "createdAtRaw": "Thu Feb 26 10:00:00 +0800 2026"
+        }
+      ]
+    },
+    {
+      "brand": "vivo",
+      "series": "S50系列",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 128.48,
+          "tag": "中端销量",
+          "statusId": "5271031905519344",
+          "bid": "QtNRAn9PG",
+          "statusUrl": "https://m.weibo.cn/status/QtNRAn9PG",
+          "createdAtRaw": "Fri Feb 27 20:30:00 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 102.04,
+          "tag": "中端销量",
+          "statusId": "5270344882979578",
+          "bid": "QtvZucv7I",
+          "statusUrl": "https://m.weibo.cn/status/QtvZucv7I",
+          "createdAtRaw": "Wed Feb 25 23:00:00 +0800 2026"
+        }
+      ]
+    },
+    {
+      "brand": "华为",
+      "series": "nova 15系列",
+      "entries": [
+        {
+          "week": "2026-W7",
+          "sales": 162.4,
+          "tag": "中端销量",
+          "statusId": "5270971507803917",
+          "bid": "QtMiawK9D",
+          "statusUrl": "https://m.weibo.cn/status/QtMiawK9D",
+          "createdAtRaw": "Fri Feb 27 16:30:00 +0800 2026"
+        },
+        {
+          "week": "2026-W6",
+          "sales": 125.62,
+          "tag": "中端销量",
+          "statusId": "5270480777907270",
+          "bid": "QtzwFxb2C",
+          "statusUrl": "https://m.weibo.cn/status/QtzwFxb2C",
+          "createdAtRaw": "Thu Feb 26 08:00:01 +0800 2026"
+        }
+      ]
+    }
+  ]
+}

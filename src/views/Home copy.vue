@@ -157,7 +157,7 @@ onUnmounted(() => {
 
 const brandGradient = (brand: string) => {
   const map: Record<string, [string, string]> = {
-    苹果: ['#A1A1AA', '#3F3F46'],
+    苹果: ['#A1A1AA', '#f68640'],
     小米: ['#FF7A18', '#FF3D00'],
     OPPO: ['#4ADE80', '#16A34A'],
     vivo: ['#60A5FA', '#2563EB'],
