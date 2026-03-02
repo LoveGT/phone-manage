@@ -1,5 +1,5 @@
 <template>
-  <div class="home-container">
+  <div class="home-container" :class="{ 'home-container--dark': isDark }">
     <!-- <el-card class="welcome-card" shadow="hover">
       <template #header>
         <div class="card-header flex-between">
@@ -76,14 +76,6 @@ type ECOption = ComposeOption<
   | GridComponentOption
   | ToolboxComponentOption
 >
-
-const techStack = ref([
-  { name: 'Vue 3', icon: '💚' },
-  { name: 'Element Plus', icon: '🎨' },
-  { name: 'ECharts', icon: '📊' },
-  { name: 'UnoCSS', icon: '🎯' },
-])
-
 type FlagshipEntry = {
   week: string
   sales: number
@@ -133,8 +125,23 @@ watch(weeks, (w) => {
 const playIntervalMs = 1200
 let timer: number | undefined
 
+const isTargetW08 = (w?: string) => {
+  if (!w) return false
+  const parts = w.split('-W')
+  if (parts.length < 2) return false
+  const n = Number(parts[1])
+  return n === 8
+}
+
 watch(currentWeek, (w) => {
   if (!w) {
+    if (timer != null) {
+      window.clearInterval(timer)
+      timer = undefined
+    }
+    return
+  }
+  if (isTargetW08(w)) {
     if (timer != null) {
       window.clearInterval(timer)
       timer = undefined
@@ -147,7 +154,17 @@ watch(currentWeek, (w) => {
     const wList = weeks.value
     if (!wList.length)
       return
-    currentWeekIndex.value = (currentWeekIndex.value + 1) % wList.length
+    const nextIndex = (currentWeekIndex.value + 1)
+    const nextWeek = wList[Math.min(nextIndex, wList.length - 1)]
+    if (isTargetW08(nextWeek)) {
+      currentWeekIndex.value = Math.min(nextIndex, wList.length - 1)
+      if (timer != null) {
+        window.clearInterval(timer)
+        timer = undefined
+      }
+      return
+    }
+    currentWeekIndex.value = nextIndex % wList.length
   }, playIntervalMs)
 }, { immediate: true })
 
@@ -224,14 +241,13 @@ onUnmounted(() => {
     mq.removeEventListener('change', mqHandler)
 })
 
-const isDark = ref(false)
+const isDark = ref(true)
 let dmq: MediaQueryList | undefined
 let dmqHandler: ((e: MediaQueryListEvent) => void) | undefined
 
 onMounted(() => {
   const d = window.matchMedia('(prefers-color-scheme: dark)')
   const fd = () => { isDark.value = d.matches }
-  fd()
   d.addEventListener('change', fd)
   dmq = d
   dmqHandler = fd
@@ -358,6 +374,29 @@ const chartOption = computed<ECOption>(() => {
 <style scoped>
 .home-container {
   padding: 0px;
+  height: 100vh;
+}
+
+.home-container--dark {
+  background-color: #0B1220;
+  color: #E5E7EB;
+}
+
+.home-container--dark .card-header {
+  color: #E5E7EB;
+}
+
+.home-container--dark .chart-card :deep(.el-card__body) {
+  background-color: #0F172A;
+}
+
+.home-container--dark .chart-card :deep(.el-card__header) {
+  background-color: #0F172A;
+  border-bottom-color: #1E293B;
+}
+
+.home-container--dark .chart-card {
+  border-color: #1E293B;
 }
 
 .welcome-card {
@@ -412,8 +451,8 @@ const chartOption = computed<ECOption>(() => {
 
 .week-badge {
   position: absolute;
-  right: 18px;
-  top: 50%;
+  right: 10%;
+  top: 70%;
   transform: translateY(-50%);
   width: 64px;
   height: 64px;
@@ -431,6 +470,7 @@ const chartOption = computed<ECOption>(() => {
   backdrop-filter: blur(6px);
   user-select: none;
   pointer-events: none;
+  z-index: 9999;
 }
 
 .week-badge__year {
