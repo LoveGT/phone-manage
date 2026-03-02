@@ -1,6 +1,6 @@
 <template>
   <div class="home-container">
-    <el-card class="welcome-card" shadow="hover">
+    <!-- <el-card class="welcome-card" shadow="hover">
       <template #header>
         <div class="card-header flex-between">
           <span>📱 Phone Manage</span>
@@ -20,11 +20,11 @@
           </el-card>
         </el-col>
       </el-row>
-    </el-card>
+    </el-card> -->
 
     <el-card class="chart-card" shadow="hover">
       <template #header>
-        <div class="card-header flex-between">
+        <div class="card-header flex-start">
           <span>📈 新品旗舰销量排行榜</span>
         </div>
       </template>
@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import VChart from 'vue-echarts'
 import type { ComposeOption } from 'echarts/core'
 import { use } from 'echarts/core'
@@ -101,6 +101,7 @@ type FlagshipFile = {
 }
 
 const data = flagshipData as unknown as FlagshipFile
+const dataSourceLabel = '@RD观测'
 
 const weekKey = (week: string) => {
   const m = /^(\d{4})-W(\d{1,2})$/.exec(week)
@@ -156,15 +157,42 @@ onUnmounted(() => {
 })
 
 const brandGradient = (brand: string) => {
-  const map: Record<string, [string, string]> = {
-    苹果: ['#A1A1AA', '#3F3F46'],
-    小米: ['#FF7A18', '#FF3D00'],
-    OPPO: ['#4ADE80', '#16A34A'],
-    vivo: ['#60A5FA', '#2563EB'],
-    荣耀: ['#F472B6', '#DB2777'],
-    华为: ['#FB7185', '#E11D48'],
+  const mapLightDesktop: Record<string, [string, string]> = {
+    苹果: ['#E5E7EB', '#4B5563'],
+    小米: ['#FFB357', '#FF6A00'],
+    OPPO: ['#34D399', '#059669'],
+    vivo: ['#60A5FA', '#1D4ED8'],
+    荣耀: ['#F472B6', '#BE185D'],
+    华为: ['#F87171', '#B91C1C'],
   }
-  const [from, to] = map[brand] ?? ['#A78BFA', '#6D28D9']
+  const mapLightMobile: Record<string, [string, string]> = {
+    苹果: ['#F3F4F6', '#6B7280'],
+    小米: ['#FFD199', '#FF7A1A'],
+    OPPO: ['#5EEAD4', '#10B981'],
+    vivo: ['#8EC8FF', '#2563EB'],
+    荣耀: ['#F78DA7', '#BE185D'],
+    华为: ['#FFA6A6', '#DC2626'],
+  }
+  const mapDarkDesktop: Record<string, [string, string]> = {
+    苹果: ['#9CA3AF', '#E5E7EB'],
+    小米: ['#FF8F1F', '#FF5A00'],
+    OPPO: ['#34D399', '#10B981'],
+    vivo: ['#60A5FA', '#3B82F6'],
+    荣耀: ['#F472B6', '#F43F5E'],
+    华为: ['#F87171', '#EF4444'],
+  }
+  const mapDarkMobile: Record<string, [string, string]> = {
+    苹果: ['#D1D5DB', '#F3F4F6'],
+    小米: ['#FFB357', '#FF6A00'],
+    OPPO: ['#6EE7B7', '#10B981'],
+    vivo: ['#93C5FD', '#2563EB'],
+    荣耀: ['#F9A8D4', '#EC4899'],
+    华为: ['#FDA4AF', '#F43F5E'],
+  }
+  const active = isDark.value
+    ? (isMobile.value ? mapDarkMobile : mapDarkDesktop)
+    : (isMobile.value ? mapLightMobile : mapLightDesktop)
+  const [from, to] = active[brand] ?? (isDark.value ? ['#8B5CF6', '#4C1D95'] : ['#A78BFA', '#6D28D9'])
   return {
     type: 'linear' as const,
     x: 0,
@@ -177,6 +205,42 @@ const brandGradient = (brand: string) => {
     ],
   }
 }
+
+const isMobile = ref(false)
+let mq: MediaQueryList | undefined
+let mqHandler: ((e: MediaQueryListEvent) => void) | undefined
+
+onMounted(() => {
+  const m = window.matchMedia('(max-width: 768px)')
+  const fn = () => { isMobile.value = m.matches }
+  fn()
+  m.addEventListener('change', fn)
+  mq = m
+  mqHandler = fn
+})
+
+onUnmounted(() => {
+  if (mq && mqHandler)
+    mq.removeEventListener('change', mqHandler)
+})
+
+const isDark = ref(false)
+let dmq: MediaQueryList | undefined
+let dmqHandler: ((e: MediaQueryListEvent) => void) | undefined
+
+onMounted(() => {
+  const d = window.matchMedia('(prefers-color-scheme: dark)')
+  const fd = () => { isDark.value = d.matches }
+  fd()
+  d.addEventListener('change', fd)
+  dmq = d
+  dmqHandler = fd
+})
+
+onUnmounted(() => {
+  if (dmq && dmqHandler)
+    dmq.removeEventListener('change', dmqHandler)
+})
 
 const chartOption = computed<ECOption>(() => {
   const week = currentWeek.value
@@ -197,14 +261,27 @@ const chartOption = computed<ECOption>(() => {
   const names = rows.map(r => r.name)
   const values = rows.map(r => r.sales)
 
+  const textColor = isDark.value ? '#E5E7EB' : '#111827'
+  const subTextColor = isDark.value ? '#9CA3AF' : '#6B7280'
+  const splitColor = isDark.value ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.06)'
+  const bgColor = isDark.value ? '#0B1220' : 'transparent'
+
   return {
+    backgroundColor: bgColor,
+    textStyle: { color: textColor },
     title: {
       text: '新品旗舰销量排行榜（Sell out）',
-      subtext: week ? `单位：万` : '',
+      subtext: week ? `单位：万 · 数据来源：${dataSourceLabel}` : `数据来源：${dataSourceLabel}`,
       left: 'center',
+      textStyle: { color: textColor },
+      subtextStyle: { color: subTextColor },
     },
     toolbox: {
       right: 10,
+      iconStyle: {
+        color: textColor,
+        borderColor: textColor,
+      },
       feature: {
         saveAsImage: { show: true },
       },
@@ -217,7 +294,7 @@ const chartOption = computed<ECOption>(() => {
       valueFormatter: (value: unknown) => `${value} 万`,
     },
     grid: {
-      left: 160,
+      left: 60,
       right: 50,
       bottom: 40,
       top: 80,
@@ -225,11 +302,13 @@ const chartOption = computed<ECOption>(() => {
     xAxis: {
       type: 'value',
       axisLabel: {
-        formatter: '{value} 万',
+        color: textColor,
+        rotate: 45,
+        fontSize: 11,
       },
       splitLine: {
         lineStyle: {
-          color: 'rgba(0,0,0,0.06)',
+          color: splitColor,
         },
       },
     },
@@ -238,7 +317,9 @@ const chartOption = computed<ECOption>(() => {
       inverse: true,
       data: names,
       axisLabel: {
-        color: '#111827',
+        color: textColor,
+        rotate: 45,
+        fontSize: 11,
         width: 150,
         overflow: 'truncate',
       },
@@ -252,7 +333,7 @@ const chartOption = computed<ECOption>(() => {
         label: {
           show: true,
           position: 'right',
-          color: '#111827',
+          color: textColor,
           valueAnimation: true,
           formatter: (p: { value?: unknown }) => `${p.value ?? ''} 万`,
         },
@@ -276,7 +357,7 @@ const chartOption = computed<ECOption>(() => {
 
 <style scoped>
 .home-container {
-  padding: 20px;
+  padding: 0px;
 }
 
 .welcome-card {
